@@ -10,11 +10,12 @@ public class Task {
 
     private static int nextId = 1;
 
-    private int id;
-    private LocalDate deadline; // Imutável após o nascimento
+    private final int id;   // o id da tarefa também nunca muda
+    private final LocalDate deadline; // Imutável após o nascimento
     private String title;
     private TaskStatus status;
     private User owner;
+    private int estimattedEffort;
 
     public Task(String title, LocalDate deadline) {
         this.id = nextId++;
@@ -57,4 +58,5 @@ public class Task {
     public String getTitle() { return title; }
     public LocalDate getDeadline() { return deadline; }
     public User getOwner() { return owner; }
+    public int getEstimatedEffort() { return estimattedEffort;}
 }
