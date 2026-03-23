@@ -1,4 +1,5 @@
 package com.nexus.model;
+import java.util.List;
 
 public class User {
     private final String username;
@@ -9,6 +10,10 @@ public class User {
             throw new IllegalArgumentException("Username não pode ser vazio.");
         }
         this.username = username;
+
+        if (email == null || !email.contains("@") || !email.contains(".")){
+            throw new IllegalArgumentException("O e-mail deve seguir o formato usuario@dominio.com");
+        }
         this.email = email;
     }
 
@@ -20,7 +25,10 @@ public class User {
         return username;
     }
 
-    public long calculateWorkload() {
-        return 0; 
+    public long calculateWorkload(List<Task> allTasks) {
+        return allTasks.stream()
+            .filter(tasks -> this.equals(tasks.getOwner()))
+            .filter(tasks -> tasks.getStatus() == TaskStatus.IN_PROGRESS)
+            .count();
     }
 }

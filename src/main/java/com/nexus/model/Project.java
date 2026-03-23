@@ -43,7 +43,7 @@ public class Project {
     }
 
     // retorna cópia da lista
-    public List<Task> geTasks() {
+    public List<Task> getTasks() {
         return new ArrayList<>(tasks);
     }
 
