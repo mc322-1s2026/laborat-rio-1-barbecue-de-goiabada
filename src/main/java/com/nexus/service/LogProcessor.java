@@ -34,7 +34,7 @@ public class LogProcessor {
                                 System.out.println("[LOG] Usuário criado: " + p[1]);
                             }
                             case "CREATE_TASK" -> {
-                                Task t = new Task(p[1], LocalDate.parse(p[2]));
+                                Task t = new Task(p[1], LocalDate.parse(p[2])); // tem que mudar pra ter o parametro novo estimatedEffort
                                 workspace.addTask(t);
                                 System.out.println("[LOG] Tarefa criada: " + p[1]);
                             }

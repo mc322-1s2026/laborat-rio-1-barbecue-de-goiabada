@@ -2,6 +2,8 @@ package com.nexus.model;
 
 import java.time.LocalDate;
 
+import com.nexus.exception.NexusValidationException;
+
 public class Task {
     // Métricas Globais (Alunos implementam a lógica de incremento/decremento)
     public static int totalTasksCreated = 0;
@@ -15,13 +17,17 @@ public class Task {
     private String title;
     private TaskStatus status;
     private User owner;
-    private int estimattedEffort;
+    private int estimatedEffort;
 
-    public Task(String title, LocalDate deadline) {
+    public Task(String title, LocalDate deadline, int estimatedEffort) {    // agora o esforco tbm precisa ser parametro
+        if(title == null || title.isBlank()){
+            throw new IllegalArgumentException("O título da tarefa não pode ser vazio");
+        }
         this.id = nextId++;
         this.deadline = deadline;
         this.title = title;
         this.status = TaskStatus.TO_DO;
+        this.estimatedEffort = estimatedEffort;
         
         // Ação do Aluno:
         totalTasksCreated++; 
@@ -34,6 +40,15 @@ public class Task {
     public void moveToInProgress(User user) {
         // TODO: Implementar lógica de proteção e atualizar activeWorkload
         // Se falhar, incrementar totalValidationErrors e lançar NexusValidationException
+        this.owner = user;
+
+        if(this.owner == null || this.status == TaskStatus.BLOCKED) {
+            totalValidationErrors += 1;
+            throw new NexusValidationException("Não é possível mover a tarefa para IN_PROGRESS.");
+        }
+        this.status = TaskStatus.IN_PROGRESS;
+        activeWorkload += 1;
+
     }
 
     /**
@@ -42,10 +57,21 @@ public class Task {
      */
     public void markAsDone() {
         // TODO: Implementar lógica de proteção e atualizar activeWorkload (decrementar)
+        if(this.status == TaskStatus.BLOCKED) {
+            totalValidationErrors += 1;
+            throw new NexusValidationException("Não é possível mover uma tarefa BLOCKED para DONE.");
+        }
+        this.status = TaskStatus.DONE;
+        activeWorkload -= 1;
+        
     }
 
     public void setBlocked(boolean blocked) {
         if (blocked) {
+            if (this.status == TaskStatus.DONE) {
+                totalValidationErrors += 1;
+                throw new NexusValidationException("Uma tarefa DONE não pode ser bloqueada.");
+            }
             this.status = TaskStatus.BLOCKED;
         } else {
             this.status = TaskStatus.TO_DO; // Simplificação para o Lab
@@ -58,5 +84,5 @@ public class Task {
     public String getTitle() { return title; }
     public LocalDate getDeadline() { return deadline; }
     public User getOwner() { return owner; }
-    public int getEstimatedEffort() { return estimattedEffort;}
+    public int getEstimatedEffort() { return estimatedEffort;}
 }
