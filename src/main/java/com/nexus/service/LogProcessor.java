@@ -76,7 +76,7 @@ public class LogProcessor {
  
                                 System.out.println("[LOG] Tarefa " + p[1] + " → " + p[2]);
                             }
-                         //   case "REPORT_STATUS" -> workspace.printReports(users);
+                            case "REPORT_STATUS" -> workspace.printReports(users);
                             default -> System.err.println("[WARN] Ação desconhecida: " + action);
                         }
                     } catch (NexusValidationException e) {
