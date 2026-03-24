@@ -108,8 +108,12 @@ public class Main {
             System.out.print("Prazo (AAAA-MM-DD): ");
             LocalDate deadline = LocalDate.parse(scanner.nextLine());
 
-            Task newTask = new Task(title, deadline); // tem q mudar pra ter o parametro novo estimatedEffort
+            System.out.print("Esforço estimado (horas): ");
+            int effort = Integer.parseInt(scanner.nextLine().trim());
+ 
+            Task newTask = new Task(title, deadline, effort); // tem q mudar pra ter o parametro novo estimatedEffort
             workspace.addTask(newTask);
+            
             System.out.println("[OK] Tarefa adicionada ao backlog.");
         } catch (DateTimeParseException e) {
             System.err.println("[ERRO] Formato de data inválido. Use AAAA-MM-DD.");
