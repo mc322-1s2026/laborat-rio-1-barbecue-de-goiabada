@@ -91,7 +91,7 @@ public class Main {
             User newUser = new User(username, email);
             users.add(newUser);
             System.out.println("[OK] Usuário cadastrado.");
-        } catch (NexusValidationException e) {
+        } catch (IllegalArgumentException e) {
             System.err.println("[ERRO] " + e.getMessage());
         }
     }
@@ -108,8 +108,12 @@ public class Main {
             System.out.print("Prazo (AAAA-MM-DD): ");
             LocalDate deadline = LocalDate.parse(scanner.nextLine());
 
-            Task newTask = new Task(title, deadline);
+            System.out.print("Esforço estimado (horas): ");
+            int effort = Integer.parseInt(scanner.nextLine().trim());
+ 
+            Task newTask = new Task(title, deadline, effort); // tem q mudar pra ter o parametro novo estimatedEffort
             workspace.addTask(newTask);
+            
             System.out.println("[OK] Tarefa adicionada ao backlog.");
         } catch (DateTimeParseException e) {
             System.err.println("[ERRO] Formato de data inválido. Use AAAA-MM-DD.");
