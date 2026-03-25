@@ -127,7 +127,6 @@ public class Workspace {
                     .count();
             System.out.printf("  %s → %d tarefas%n", bottleneck, count);
         }
- 
-       // System.out.println("\n======= FIM DO RELATÓRIO =======\n");
+
     }
 }

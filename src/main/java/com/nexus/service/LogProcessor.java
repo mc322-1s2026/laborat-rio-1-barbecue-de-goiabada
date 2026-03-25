@@ -25,10 +25,9 @@ public class LogProcessor {
                 for (String line : lines) {
                     if (line.isBlank() || line.startsWith("#")) continue;
 
-                    String[] p = line.split(";");
-                    String action = p[0];
-
                     try {
+                        String[] p = line.split(";");
+                        String action = p[0];
                         switch (action) {
                             case "CREATE_USER" -> {
                                 users.add(new User(p[1], p[2]));
