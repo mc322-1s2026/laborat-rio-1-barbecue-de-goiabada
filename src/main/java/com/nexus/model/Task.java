@@ -40,15 +40,14 @@ public class Task {
     public void moveToInProgress(User user) {
         // TODO: Implementar lógica de proteção e atualizar activeWorkload
         // Se falhar, incrementar totalValidationErrors e lançar NexusValidationException
-        this.owner = user;
-
-        if(this.owner == null || this.status == TaskStatus.BLOCKED) {
+    
+        if(user == null || this.status == TaskStatus.BLOCKED) {
             totalValidationErrors += 1;
             throw new NexusValidationException("Não é possível mover a tarefa para IN_PROGRESS.");
         }
+        this.owner = user;
         this.status = TaskStatus.IN_PROGRESS;
         activeWorkload += 1;
-
     }
 
     /**
@@ -61,8 +60,10 @@ public class Task {
             totalValidationErrors += 1;
             throw new NexusValidationException("Não é possível mover uma tarefa BLOCKED para DONE.");
         }
+        if(this.status == TaskStatus.IN_PROGRESS){
+            activeWorkload -= 1;
+        }
         this.status = TaskStatus.DONE;
-        activeWorkload -= 1;
         
     }
 

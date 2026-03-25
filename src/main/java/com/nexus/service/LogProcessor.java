@@ -67,7 +67,10 @@ public class LogProcessor {
                                 if (t == null) throw new NexusValidationException("Tarefa ID " + p[1] + " não encontrada.");
  
                                 switch (p[2]) {
-                                    case "IN_PROGRESS" -> t.moveToInProgress(t.getOwner());
+                                    case "IN_PROGRESS" -> {
+                                        if (t.getOwner() == null) throw new NexusValidationException("Tarefa ID" + p[1] + "não possui owner.");
+                                        t.moveToInProgress(t.getOwner());
+                                    }
                                     case "DONE"        -> t.markAsDone();
                                     case "BLOCKED"     -> t.setBlocked(true);
                                     case "TO_DO"       -> t.setBlocked(false);

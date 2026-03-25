@@ -91,7 +91,7 @@ public class Main {
             User newUser = new User(username, email);
             users.add(newUser);
             System.out.println("[OK] Usuário cadastrado.");
-        } catch (NexusValidationException e) {
+        } catch (IllegalArgumentException e) {
             System.err.println("[ERRO] " + e.getMessage());
         }
     }
