@@ -38,8 +38,7 @@ public class Task {
      * Regra: Só é possível se houver um owner atribuído e não estiver BLOCKED.
      */
     public void moveToInProgress(User user) {
-        // TODO: Implementar lógica de proteção e atualizar activeWorkload
-        // Se falhar, incrementar totalValidationErrors e lançar NexusValidationException
+
     
         if(user == null || this.status == TaskStatus.BLOCKED) {
             totalValidationErrors += 1;
@@ -55,7 +54,6 @@ public class Task {
      * Regra: Só pode ser movida para DONE se não estiver BLOCKED.
      */
     public void markAsDone() {
-        // TODO: Implementar lógica de proteção e atualizar activeWorkload (decrementar)
         if(this.status == TaskStatus.BLOCKED) {
             totalValidationErrors += 1;
             throw new NexusValidationException("Não é possível mover uma tarefa BLOCKED para DONE.");
